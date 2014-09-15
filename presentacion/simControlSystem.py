@@ -17,10 +17,11 @@ u0 = np.matrix ([0])
 xref = np.matrix ([1])
 
 class simulador ():
-  def __init__ (self, C, P, delay):
+  def __init__ (self, C, P, delay, lim):
     self.C = C
     self.P = P
     self.delay = delay
+    self.lim = lim
     # conversión de las funciones transferencias a
     # representación en matríces de transición de estados
     Ac,Bc,Cc,Dc = ctrl.matlab.ssdata(self.C)
@@ -29,6 +30,17 @@ class simulador ():
     self.eulController = em.EulerModified (Ac, Bc, Cc, Dc, x0c, u0, self.delay)
     self.eulPlant = em.EulerModified (Ap, Bp, Cp, Dp, x0p, u0, self.delay)
 
+
+  def limiter (self, num):
+      limite = num
+      if (limite[0,0] >= self.lim):
+         limite [0,0] = self.lim
+      elif  (limite[0,0] <= -1*self.lim):
+         limite[0,0] = -1*self.lim
+
+      return limite
+
+
   def generator(self, n):
     for j in range (n):
       self.eulController.iteration()
@@ -36,7 +48,12 @@ class simulador ():
       self.y = self.eulPlant.yk
       self.e = xref - self.y
       self.eulController.uk = self.e
-      self.eulPlant.uk = self.eulController.yk
+
+
+      #self.eulPlant.uk = self.eulController.yk
+      self.eulPlant.uk = self.limiter (self.eulController.yk)
+      
+
       mesg = {'outs':[self.y[0,0], self.e[0,0], self.eulPlant.uk[0,0]]}
       # self.y  y,   self.e  e,  self.eulPlant.uk  u,
 
@@ -44,8 +61,8 @@ class simulador ():
 
 if __name__ == "__main__":
 
-  N = cl.N
-  sim = simulador (cl.C, cl.P, cl.DT) 
+  N = cl.N; limite = 1
+  sim = simulador (cl.C, cl.P, cl.DT, limite)
   gen = sim.generator (N)
 
   t = np.zeros(N); y = np.zeros(N); e = np.zeros(N); u = np.zeros(N); ec = np.zeros(N)
