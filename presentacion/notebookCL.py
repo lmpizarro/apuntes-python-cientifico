@@ -22,6 +22,7 @@ C = ctrl.parallel (deriv + prop, integ)
 Ac,Bc,Cc,Dc = ctrl.matlab.ssdata(C)
 print deriv, integ, C
 
+#  Planta con realimentación unitaria PID 
 l = ctrl.series (C,P)
 sys = ctrl.feedback(l,1)
 
@@ -33,27 +34,30 @@ mpl.plot(t,y, label='C*Planta CL')
 #mpl.plot(omega,mag)
 #mpl.show()
 
-
+#  Planta con realimentación unitaria sin controlador
 sys1 = ctrl.feedback(P,1)
 y,t = ctrl.matlab.step(sys1, T = np.arange(0, Ttotal, DT) )
 mpl.plot(t,y, label='Planta CL'); mpl.legend(loc='lower right')
 
+
+#  Planta con realimentación unitaria controlador P
 sys2 = ctrl.feedback(prop*P,1)
 y,t = ctrl.matlab.step(sys2, T = np.arange(0, Ttotal, DT) )
 mpl.plot(t,y, label='prop*Planta CL' ); mpl.legend(loc='lower right')
 
+#  Planta con realimentación unitaria controlador PD 
 sys3 = ctrl.feedback((deriv + prop)*P,1)
 y3,t = ctrl.matlab.step(sys3, T = np.arange(0, Ttotal, DT) )
 mpl.plot(t,y3, label='(deriv+ prop)*Planta CL'); mpl.legend(loc='lower right')
+mpl.show()
 
+
+# Para comparar la respuesta PI con PID
 e = np.zeros(N)
 i = 0
 for d in  y3:
   e[i] = y[i] - d 
   i += 1	
-
-
-mpl.show()
 
 mpl.plot(t,e, label='error CL PID vs CL PD'); mpl.legend(loc='lower right')
 mpl.show()
