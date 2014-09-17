@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+
+
+{% block title %}Home Page{% endblock %}
+
+{% block body %}
+ 
+
+{% endblock %}
+
+
+{% block apparea %}
+<script src="/socket.io/socket.io.js"></script>
+
+
+<script type=text/javascript >
+  var $SCRIPT_ROOT = 'http://localhost:3000/sensor/api/v1.0';
+  var socket = io.connect('http://localhost:3000');
+
+  var allMessages = {};
+  var keysClient = {}; 
+  var rtChan = "rtChanMessageSensor";
+
+  function getObjKeys (obj) {
+    return (Object.keys(obj));
+  }
+  
+  socket.on(rtChan, function (mess) {
+
+    var message = mess.message;
+    var client = message.client;
+    var val = message.val;
+    var ts = message.ts;
+    var name = message.name;
+    var key   = client + "-" + name;
+
+    //console.log(mess.message.client, mess.message.val, mess.message.ts, mess.message.name);
+    if(!allMessages.hasOwnProperty(key)){
+       allMessages[key]   = [];
+    }
+
+    allMessages[key].push (message); 
+
+    //console.log( key, allMessages[key]);
+
+    
+    if ( allMessages[key].length > 10) {
+       allMessages[key].shift ();
+       console.log ("mayor a 10");
+    }
+    var tmpK = getObjKeys(allMessages);
+    console.log ("keys", tmpK );
+    console.log ("allmessages", allMessages);
+
+  });
+
+
+  function testEmit (){
+    var time = new Date ();
+    var ts = time.getTime()/1000;
+    socket.emit('messageFromHMI', { ts: ts });
+
+  }
+
+ 
+  var timer = setInterval (testEmit, 1000);
+  
+
+ (function() {
+   function getUri (uri, fcn){
+     var uri = $SCRIPT_ROOT + uri;
+     console.log("uri .... " + fcn, uri);
+     $.ajax(uri)
+       .done (function (data){
+           console.log("done",data);
+       }) 
+       .fail(function(err) {
+           console.log( "fail", err );
+        })
+        .always(function() {
+           console.log( "always" );
+        }); 
+   }
+
+  function getWelcome (){
+    getUri ('/', "getWelcome");
+  }
+
+  function getClients (){
+    getUri ('/clients', "getClients");
+  }
+
+  function getTags (client){
+    getUri ('/tags/'+client, "getTags");
+  }
+
+  // vals/<string:client>/tag/<string:tag>
+  function getvalsClientTag(client, tag) {
+    getUri ('/vals/'+client+'/tag/'+tag, "getvalsClientTag");
+  }
+
+  //app.route('/sensor/api/v1.0/vals/minute/<string:client>/tag/<string:tag>', methods = ['GET'])
+  function getvalsMinuteClientTag(client, tag) {
+    getUri ('/vals/minute/'+client+'/tag/'+tag, "getvalsMinuteClientTag");
+  }
+
+  // app.route('/sensor/api/v1.0/vals/hour/<string:client>/tag/<string:tag>', methods = ['GET'])
+  function getvalsHourClientTag(client, tag) {
+    getUri ('/vals/hour/'+client+'/tag/'+tag, "getvalsHourClientTag");
+  }
+
+  //app.route('/sensor/api/v1.0/vals/last/<string:client>/tag/<string:tag>', methods = ['GET'])
+  function getLastValsClientTag(client, tag){
+    getUri ('/vals/last/'+client+'/tag/'+tag, "getLastValsClientTag");
+  }
+
+
+  var client = 'clt01';
+  var name ='TE-01';
+  getWelcome ();
+  getClients ();
+  getTags ('pepe');
+  getvalsClientTag('pepe','TE-01');
+  getvalsMinuteClientTag(client, name);
+  getvalsHourClientTag(client, name);
+  getLastValsClientTag(client,name);
+
+
+})();
+
+
+  </script>
+ 
+{% endblock %}

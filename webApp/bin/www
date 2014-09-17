@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+var debug = require('debug')('simControlSystem');
+var app = require('../app');
+var redisToWs = require ('../routes/redisToWs');
+var hmiToRedis = require ('../routes/hmiToRedis');
+
+app.set('port', process.env.PORT || 3000);
+
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+
+
+var io = require('socket.io').listen(server);
+redisToWs.runIo (io);
+hmiToRedis.runIo (io);

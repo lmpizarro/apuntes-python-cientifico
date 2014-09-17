@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block style %}
+{% endblock %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block body %}
+{% endblock %}
+
+
+{% block apparea %}
+<script src="/socket.io/socket.io.js"></script>
+
+<script type=text/javascript >
+
+  var socket = io.connect('http://localhost:3000');
+
+  socket.on ("rtChannel", function (mess){
+
+    console.log("ON ..................", mess.message);
+    
+  });
+
+  
+  socket.emit('messageFromHMI', {message:'connected' }); 
+
+  setInterval(function(){ socket.emit('messageFromHMI', {message:'connected' });  }, 1000);
+
+  console.log ("-----> ", socket);
+
+
+ (function() {
+     console.log ("recibido");
+ })();
+
+
+  </script>
+ 
+{% endblock %}
