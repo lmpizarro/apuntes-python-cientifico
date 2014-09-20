@@ -14,8 +14,10 @@ exports.runIo = function (io_){
   io.on('connection', function (socket) {
       connector = socket; 
       socket.on(ioChannel, function (data) {
-          console.log("From HMI ....................", data.message);
-         client1.publish(ioChannel, data.message);
+         reference =  data.message.val;
+         console.log("From HMI ....................",reference);
+       
+         client1.publish(ioChannel, String (reference));
       });
   });
 }

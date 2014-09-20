@@ -18,14 +18,14 @@ client1.on("punsubscribe", function (pattern, count) {
 });
 
 client1.on("pmessage", function (pattern, channel, message) {
-  console.log("("+  pattern +")" + " client1 received message on " + channel + ": " + message);
+  //console.log("("+  pattern +")" + " client1 received message on " + channel + ": " + message);
    msg_count += 1;
    if (message != null){
-      console.log (message);
+      //console.log (message);
       obj = JSON.parse(message);
       if (typeof connector != "undefined"){
         connector.emit(ioChannel, { message: obj });
-        console.log ("EMITING", ioChannel);
+        //console.log ("EMITING", ioChannel);
       }
    }
 });

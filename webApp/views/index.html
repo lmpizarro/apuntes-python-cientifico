@@ -1,34 +1,81 @@
 {% extends "layout.html" %}
 
 {% block style %}
+ <style>
+  svg {
+     font: 10px sans-serif;
+    }
+
+    .line {
+      fill: none;
+      stroke: #000;
+      stroke-width: 1.5px;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+ </style>
+
 {% endblock %}
 
 {% block title %}Home Page{% endblock %}
 
 {% block body %}
+
+<input  type="range"  min="-5" max="5" value="1"  onchange="setRef(this.value)" />
+<span id="range02"> 1 </span>
+
 {% endblock %}
 
 
 {% block apparea %}
+
 <script src="/socket.io/socket.io.js"></script>
+<script src="javascripts/d3.v3.js"></script>
+<script src="javascripts/rtGraph.js"></script>
 
 <script type=text/javascript >
 
+  function setRef (newValue){
+    var time = new Date ();
+    var ts = time.getTime()/1000;
+    socket.emit('messageFromHMI', {message:{ client: "HMI01", name: "slider02", val: newValue, ts: ts }});
+    document.getElementById("range02").innerHTML=newValue;
+  }
+
   var socket = io.connect('http://localhost:3000');
+  var v1, v2, v3;
+
+  var margin = {top: 20, right: 20, bottom: 20, left: 40}, 
+      width = 320,
+      height= 170;
+
+  var v1Graph = new RtLineChart ("body", 20, width, height, margin, "V1");
+  var v2Graph = new RtLineChart ("body", 20, width, height, margin, "V2");
+  var v3Graph = new RtLineChart ("body", 20, width, height, margin, "V3");
+
 
   socket.on ("rtChannel", function (mess){
 
-    console.log("ON ..................", mess.message);
+//    console.log("ON ..................", mess.message.outs[0], mess.message.outs[1], mess.message.outs[2]);
+      if (typeof(mess.message.outs) !== 'undefined'){
+        v1 = mess.message.outs[0];
+        v2 =  mess.message.outs[1];
+        v3 = mess.message.outs[2];
+        console.log("ON ..................", v1, v2, v3 );
+        v1Graph.insertVal(v1);
+        v2Graph.insertVal(v2);
+        v3Graph.insertVal(v3);
+      }
     
   });
-
   
   socket.emit('messageFromHMI', {message:'connected' }); 
-
-  setInterval(function(){ socket.emit('messageFromHMI', {message:'connected' });  }, 1000);
-
-  console.log ("-----> ", socket);
-
 
  (function() {
      console.log ("recibido");
