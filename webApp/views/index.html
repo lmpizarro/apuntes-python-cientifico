@@ -27,8 +27,11 @@
 
 {% block body %}
 
+<div >
 <input  type="range"  min="-5" max="5" value="1"  onchange="setRef(this.value)" />
 <span id="range02"> 1 </span>
+<p> Referencia
+</div >
 
 {% endblock %}
 
@@ -55,9 +58,9 @@
       width = 320,
       height= 170;
 
-  var v1Graph = new RtLineChart ("body", 20, width, height, margin, "V1");
-  var v2Graph = new RtLineChart ("body", 20, width, height, margin, "V2");
-  var v3Graph = new RtLineChart ("body", 20, width, height, margin, "V3");
+  var v1Graph = new RtLineChart ("body", 20, width, height, margin, "Salida") ;
+  var v2Graph = new RtLineChart ("body", 20, width, height, margin, "Error");
+  var v3Graph = new RtLineChart ("body", 20, width, height, margin, "Actuación");
 
 
   socket.on ("rtChannel", function (mess){
@@ -78,7 +81,7 @@
   socket.emit('messageFromHMI', {message:'connected' }); 
 
  (function() {
-     console.log ("recibido");
+     console.log ("Incializado");
  })();
 
 
