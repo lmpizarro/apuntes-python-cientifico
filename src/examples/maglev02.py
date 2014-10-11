@@ -12,10 +12,18 @@ from scipy import *             # Load the scipy functions
 from control.matlab import *    # Load the controls systems library
 from numpy import linalg
 from control import statefbk
+from scale import *
 
 A = matrix ([[0, 1, 0],[980, 0, -2.8],[0,0,-100]])
 B = matrix ([[0],[0],[100]])
 C = matrix ([[1,0, 0]])
+D = matrix ([[0]])
+
+(Nx,Nu) = scale (A,B,C,D)
+
+print Nx
+print
+print Nu
 
 sys = ss(A, B, C, 0)
 
@@ -32,7 +40,7 @@ p2 = -20 - 20j;
 p3 = -100;
 
 K = place(A,B, [p1,p2,p3]) 
-Af  = A -B*K
+Af  = A - B*K
 
 polesFb = linalg.eig(Af)[0]
 
@@ -46,12 +54,12 @@ T = arange (0,2, .01)  # t = 0:0.01:2;
 
 #(y, t, x) = lsim(sysfb, U=u, T=T, X0 = x0)
 
-Nbar = -285.7143   # 1/y t -> oo
+Nbarm = (Nu + K*Nx)  # 1/y t -> oo
 
-u = ones(T.shape)    # ones(size(t))
+u = ones(T.shape)   # ones(size(t))
+Nb = array(Nbarm)[0]
 
-(y, t, x) = lsim(sysfb, U=Nbar*u, T=T)
+(y, t, x) = lsim(sysfb, U=Nb*u, T=T)
 
 plot(t, y)
 show()
-
