@@ -9,7 +9,6 @@ import numpy as np
 #  Parametros de la simulacion
 DT = 0.001; Ttotal = 10; N = int(Ttotal/DT)
 
-
 # Modelo de la planta
 P = ctrl.tf([1],[1,2,0])
 
@@ -20,21 +19,28 @@ P = ctrl.tf([1],[1,2,0])
 #C = ctrl.parallel (integ, deriv)
 
 # Modelo del Controlador
-Kp = 4; Kd = 2; Ki = .1; pd = 1
+Kp = 4; Kd = 2; Ki = .1
 integ = ctrl.tf ([Ki],[1,0])
-deriv = ctrl.tf ([Kd, 1], [0.1,1])
+deriv = ctrl.tf ([Kd, 0], [0.1,1])
 prop  = Kp
+
+# Interconección del controlador
 C = ctrl.parallel (deriv + prop, integ)
-
-
-
 
 #derivPuro = ctrl.tf ([Kd, Kp], [0,1])
 
+# Serie del Controlador y la Planta
 l = ctrl.series (C,P)
+# Realimentación Unitaria
 sys = ctrl.feedback(l,1)
 
+# Respuesta al escalón unitario
 y,t = ctrl.matlab.step(sys, T = np.arange(0, Ttotal, DT) )
+
+# Gráfica del escalón unitario
+#mpl.plot(t,y)
+#mpl.show()
+
 
 
 #print y.shape, t.shape
@@ -43,5 +49,10 @@ y,t = ctrl.matlab.step(sys, T = np.arange(0, Ttotal, DT) )
 #mpl.plot(omega,mag)
 #mpl.show()
 
-#mpl.plot(t,y)
-#mpl.show()
+print C
+
+print integ
+
+print deriv
+
+
