@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var debug = require('debug')('simControlSystem');
 var app = require('../app');
-var redisToWs = require ('../routes/redisToWs');
+var redisToHmi = require ('../routes/redisToHmi');
 var hmiToRedis = require ('../routes/hmiToRedis');
 
 app.set('port', process.env.PORT || 3000);
@@ -12,5 +12,5 @@ var server = app.listen(app.get('port'), function() {
 
 
 var io = require('socket.io').listen(server);
-redisToWs.runIo (io);
+redisToHmi.runIo (io);
 hmiToRedis.runIo (io);
