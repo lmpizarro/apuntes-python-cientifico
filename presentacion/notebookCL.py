@@ -39,7 +39,6 @@ sys1 = ctrl.feedback(P,1)
 y,t = ctrl.matlab.step(sys1, T = np.arange(0, Ttotal, DT) )
 mpl.plot(t,y, label='Planta CL'); mpl.legend(loc='lower right')
 
-
 #  Planta con realimentación unitaria controlador P
 sys2 = ctrl.feedback(prop*P,1)
 y,t = ctrl.matlab.step(sys2, T = np.arange(0, Ttotal, DT) )
@@ -50,7 +49,6 @@ sys3 = ctrl.feedback((deriv + prop)*P,1)
 y3,t = ctrl.matlab.step(sys3, T = np.arange(0, Ttotal, DT) )
 mpl.plot(t,y3, label='(deriv+ prop)*Planta CL'); mpl.legend(loc='lower right')
 mpl.show()
-
 
 # Para comparar la respuesta PI con PID
 e = np.zeros(N)

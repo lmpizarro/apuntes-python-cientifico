@@ -61,7 +61,7 @@ class simulador ():
 
 if __name__ == "__main__":
 
-  N = cl.N; limite = 1
+  N = cl.N; limite = 25
   sim = simulador (cl.C, cl.P, cl.DT, limite)
   gen = sim.generator (N)
 
