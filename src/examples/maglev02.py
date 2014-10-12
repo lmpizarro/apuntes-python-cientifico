@@ -21,10 +21,6 @@ D = matrix ([[0]])
 
 (Nx,Nu) = scale (A,B,C,D)
 
-print Nx
-print
-print Nu
-
 sys = ss(A, B, C, 0)
 
 poles = linalg.eig(A)[0]
@@ -62,4 +58,25 @@ Nb = array(Nbarm)[0]
 (y, t, x) = lsim(sysfb, U=Nb*u, T=T)
 
 plot(t, y)
+#show()
+
+op1 = -100
+op2 = -101
+op3 = -102
+
+
+L = place(A.transpose(),C.transpose(),[op1, op2, op3]).transpose()
+
+Aob = A - L*C
+
+At1 = concatenate ((Af,B*K),1)
+At2= concatenate ((zeros(A.shape),Aob),1)
+At = concatenate ((At1,At2))
+Bt = concatenate ((B*Nbarm, zeros(B.shape)))
+Ct = concatenate ((C, zeros(C.shape)),1)
+sysOb = ss(At,Bt,Ct,0);
+
+(yo, to, xo) = lsim(sysOb, U=u, T=T)
+
+plot(to, yo)
 show()
