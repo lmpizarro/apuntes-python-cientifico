@@ -49,11 +49,19 @@ int floatToDigital(float f){
    return int((4095/4)*f + 2048);
 }
 
-float kp = 1.0;
+float sum_error;
+float old_error = 0;
+float kp = .5;
+float kd = .5;
+float ki = .5;
+
 float pid (float error){
     float calc;
+    
 
-    calc = kp * error;
+    calc = kp * error + kd*(error - old_error) + ki * sum_error;
+    old_error = error;
+    sum_error = sum_error + error;
 
     if (calc >2) calc =2;  
     if (calc < -2) calc = -2;
@@ -93,7 +101,7 @@ void recMsgFromMaster (){
                //Serial.println("#actuacion!");
 	       yOutString = msgFromMaster.substring(1,5);
 	       refString = msgFromMaster.substring(6,10);
-               Serial.println(msgFromMaster);
+               //Serial.println(msgFromMaster);
                yOut = yOutString.toInt();
                ref = refString.toInt();
 

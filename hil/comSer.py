@@ -2,6 +2,7 @@ import serial
 import time
 import json
 import string
+import planta as planta
 
 # configure the serial connections (the parameters differs on the device you are connecting to)
 ser = serial.Serial(
@@ -55,23 +56,34 @@ def floatToDigital(f):
 def genRandomPairs ():
   y = random.randint(0,4095)
   ref = random.randint(0,4095)
+
+
   yFloat = digitalToFloat (y)
   refFloat = digitalToFloat (ref)
   error = refFloat - yFloat
-  print "error", floatToDigital(error), refFloat, yFloat
+  #print "error", floatToDigital(error), refFloat, yFloat
   
   return (y,ref)
 
 
 if __name__ == '__main__':
+  planta = planta.Integral(0.0)	
+  planta.ref = 1.0
+
   while 1:
-    val = ser.readline().strip()
-    if (val=="#data!"):
-      print val
+    msgFromController = ser.readline().strip()
+    if (msgFromController=="#data!"):
       # y, ref
       (a,b) = genRandomPairs()
-      msg = armaMsg(a,b)
+      # envia (y , ref)
+      msg = armaMsg(floatToDigital(planta.out), floatToDigital(planta.ref))
+      print "estado planta: ",planta.out, planta.ref
       sendMessage (msg)
     else: #if val=="#actuacion!":
-      print val	    
+      actu = msgFromController.strip('#').strip('!')
+      try:
+        #print int(actu)
+        planta.iterate( digitalToFloat(int(actu)))
+      except:
+	pass
  
