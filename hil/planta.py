@@ -8,7 +8,7 @@ class Integral ():
 		self.ref = 0
 
         def iterate (self, input):
-	       self.out = self.out + input + random.gauss(.1,.01)
+	       self.out = self.out + input + random.gauss(.1,.01) - .1
 
 def test ():
 	p = Integral (.1)
