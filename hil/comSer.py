@@ -1,7 +1,4 @@
 import serial
-import time
-import json
-import string
 import planta as planta
 
 # configure the serial connections (the parameters differs on the device you are connecting to)
@@ -20,19 +17,6 @@ ser = serial.Serial(
 def sendMessage (messS):
   ser.flushInput()
   ser.write(str(messS))
-#
-# receive message from Arduino
-#
-def receiveMessage ():  
-  message = ""
-  c= ser.read(1)
-  print c
-
-  while 1:
-    if  c!="\n":
-      message +=c
-    else: 
-      return message
 
 def armaMsg (y,ref):
 	return '#'+str(y).zfill(4)+','+str(ref).zfill(4) +'!'
@@ -50,9 +34,9 @@ def floatToDigital(f):
     if nd > 4095: nd= 4095
     if nd < 0: nd = 0
     return nd
-
-
-
+#
+#   Test
+#
 def genRandomPairs ():
   y = random.randint(0,4095)
   ref = random.randint(0,4095)
@@ -65,24 +49,22 @@ def genRandomPairs ():
   
   return (y,ref)
 
-
 if __name__ == '__main__':
   planta = planta.Integral(0.0)	
   planta.ref = 1.0
 
   while 1:
     msgFromController = ser.readline().strip()
-    if (msgFromController=="#data!"):
+    if (msgFromController=="#estadoPlanta!"):
       # y, ref
-      (a,b) = genRandomPairs()
+      #(a,b) = genRandomPairs()
       # envia (y , ref)
       msg = armaMsg(floatToDigital(planta.out), floatToDigital(planta.ref))
       print "estado planta: ",planta.out, planta.ref
       sendMessage (msg)
-    else: #if val=="#actuacion!":
+    else: 
       actu = msgFromController.strip('#').strip('!')
       try:
-        #print int(actu)
         planta.iterate( digitalToFloat(int(actu)))
       except:
 	pass
