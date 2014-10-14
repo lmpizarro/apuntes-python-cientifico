@@ -59,7 +59,7 @@ int controller (int youtInt, int refInt){
 
 
 String msgFromMaster = "";
-int recFlag, yOut, ref, error, act;
+int recFlag, yOut, ref, error, actuInt;
 String yOutString, refString;
 void recMsgFromMaster (){
   char iC;
@@ -72,16 +72,14 @@ void recMsgFromMaster (){
        msgFromMaster += iC;
          if (iC == '!') {
             if (msgFromMaster.length() == 11){
-               //Serial.println("#actuacion!");
 	       yOutString = msgFromMaster.substring(1,5);
 	       refString = msgFromMaster.substring(6,10);
-               //Serial.println(msgFromMaster);
                yOut = yOutString.toInt();
                ref = refString.toInt();
 
-               act = controller (yOut, ref);
+               actuInt = controller (yOut, ref);
 
-               Serial.println('#' + String(act) + '!');
+               Serial.println('#' + String(actuInt) + '!');
 	    } else 
 	      msgFromMaster ="";
          }

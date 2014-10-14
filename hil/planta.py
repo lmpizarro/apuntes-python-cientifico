@@ -6,9 +6,11 @@ class Integral ():
 	def __init__(self,yinic):
 		self.out = yinic
 		self.ref = 0
+                self.actu = 0
 
         def iterate (self, input):
-	       self.out = self.out + input + random.gauss(.1,.01) - .1
+               self.actu = input
+	       self.out = self.out + self.actu + random.gauss(.1,.01) - .1
 
 def test ():
 	p = Integral (.1)
