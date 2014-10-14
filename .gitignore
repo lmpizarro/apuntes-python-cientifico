@@ -1,3 +1,6 @@
 *.pyc
 flask
 redisSim
+requirements.txt
+webApp/node_modules
+hil/arduino/build-uno
