@@ -1,0 +1,4 @@
+hola mundo iteradores
+mientras vemos
+algunas aplicaciones
+de for
