@@ -1,7 +1,7 @@
 {
  "metadata": {
   "name": "",
-  "signature": "sha256:22f4585d210d9e05b173a8ed7296aaa9127c15702e655b8664511fc7d8d9c972"
+  "signature": "sha256:a3225b475d61e1ac1ef012485442bcecc2539165dda55847a8c95c4a6ddf076b"
  },
  "nbformat": 3,
  "nbformat_minor": 0,
@@ -44,43 +44,23 @@
      "language": "python",
      "metadata": {},
      "outputs": [],
-     "prompt_number": 3
+     "prompt_number": 1
     },
     {
      "cell_type": "code",
      "collapsed": false,
      "input": [
-      "trad_version()"
+      "time_trad = trad_version()\n",
+      "print(time_trad)"
      ],
      "language": "python",
      "metadata": {},
      "outputs": [
       {
-       "metadata": {},
-       "output_type": "pyout",
-       "prompt_number": 4,
+       "output_type": "stream",
+       "stream": "stdout",
        "text": [
-        "19.6796452999115"
-       ]
-      }
-     ],
-     "prompt_number": 4
-    },
-    {
-     "cell_type": "code",
-     "collapsed": false,
-     "input": [
-      "numpy_version()"
-     ],
-     "language": "python",
-     "metadata": {},
-     "outputs": [
-      {
-       "metadata": {},
-       "output_type": "pyout",
-       "prompt_number": 5,
-       "text": [
-        "0.3110647201538086"
+        "21.37397336959839\n"
        ]
       }
      ],
@@ -90,17 +70,36 @@
      "cell_type": "code",
      "collapsed": false,
      "input": [
-      "19.679/0.311"
+      "time_np = numpy_version()\n",
+      "print(time_np)"
      ],
      "language": "python",
      "metadata": {},
      "outputs": [
       {
-       "metadata": {},
-       "output_type": "pyout",
-       "prompt_number": 7,
+       "output_type": "stream",
+       "stream": "stdout",
        "text": [
-        "63.276527331189705"
+        "0.32607078552246094\n"
+       ]
+      }
+     ],
+     "prompt_number": 6
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "print(time_trad/time_np)"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "output_type": "stream",
+       "stream": "stdout",
+       "text": [
+        "65.55010236611975\n"
        ]
       }
      ],
@@ -299,6 +298,113 @@
       "\n",
       "### Son raras"
      ]
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "# Broadcasting\n",
+      "\n",
+      "### Las reglas del broadcasting \n",
+      "* Array Broadcasting in numpy [link](http://wiki.scipy.org/EricsBroadcastingDoc)\n",
+      "* Broadcasting [link](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)\n",
+      "\n",
+      "En una operaci\u00f3n entre 2 arreglos, Numpy intenta que el arreglo de menor dimensi\u00f3n adquiera las dimensiones del mayor y realizar la operaci\u00f3n."
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "a = numpy.array([1.0, 2.0, 3.0])\n",
+      "b = numpy.array([2.0, 2.0, 2.0])\n",
+      "print(a*b)\n",
+      "b = 2.0\n",
+      "print(a*b, b)\n",
+      "\n",
+      "b = numpy.array([2])\n",
+      "print(a*b, b)\n",
+      "\n",
+      "#  3 D\n",
+      "x=numpy.empty((2,3,5))\n",
+      "x=numpy.arange(30).reshape(2,3,5)\n",
+      "print(x)\n",
+      "\n",
+      "print()\n",
+      "y = numpy.array([2,1,3,1,2])\n",
+      "print (\"y*x broadcasted\")\n",
+      "print()\n",
+      "print (y*x)\n",
+      "\n",
+      "# repeat\n",
+      "print(\"repeat --->\")\n",
+      "print(y.repeat(2))\n",
+      "z= numpy.tile(y,(3, 1))\n",
+      "print(\"tile .....\", z.shape, x.shape)\n",
+      "print(z*x)\n",
+      "\n",
+      "\n",
+      "\n",
+      "# genera error\n",
+      "z= numpy.tile(y,(2, 1))\n",
+      "print(z*x)\n",
+      "\n",
+      "# tambi\u00e9n genera error\n",
+      "w = numpy.array([2,1])\n",
+      "v = numpy.tile(w,(3,1))\n",
+      "print (v*x)"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "output_type": "stream",
+       "stream": "stdout",
+       "text": [
+        "[ 2.  4.  6.]\n",
+        "[ 2.  4.  6.] 2.0\n",
+        "[ 2.  4.  6.] [2]\n",
+        "[[[ 0  1  2  3  4]\n",
+        "  [ 5  6  7  8  9]\n",
+        "  [10 11 12 13 14]]\n",
+        "\n",
+        " [[15 16 17 18 19]\n",
+        "  [20 21 22 23 24]\n",
+        "  [25 26 27 28 29]]]\n",
+        "\n",
+        "y*x broadcasted\n",
+        "\n",
+        "[[[ 0  1  6  3  8]\n",
+        "  [10  6 21  8 18]\n",
+        "  [20 11 36 13 28]]\n",
+        "\n",
+        " [[30 16 51 18 38]\n",
+        "  [40 21 66 23 48]\n",
+        "  [50 26 81 28 58]]]\n",
+        "repeat --->\n",
+        "[2 2 1 1 3 3 1 1 2 2]\n",
+        "tile ..... (3, 5) (2, 3, 5)\n",
+        "[[[ 0  1  6  3  8]\n",
+        "  [10  6 21  8 18]\n",
+        "  [20 11 36 13 28]]\n",
+        "\n",
+        " [[30 16 51 18 38]\n",
+        "  [40 21 66 23 48]\n",
+        "  [50 26 81 28 58]]]\n"
+       ]
+      },
+      {
+       "ename": "ValueError",
+       "evalue": "operands could not be broadcast together with shapes (3,2) (2,3,5) ",
+       "output_type": "pyerr",
+       "traceback": [
+        "\u001b[1;31m---------------------------------------------------------------------------\u001b[0m\n\u001b[1;31mValueError\u001b[0m                                Traceback (most recent call last)",
+        "\u001b[1;32m<ipython-input-49-0fd205e73d97>\u001b[0m in \u001b[0;36m<module>\u001b[1;34m()\u001b[0m\n\u001b[0;32m     30\u001b[0m \u001b[0mv\u001b[0m \u001b[1;33m=\u001b[0m \u001b[0mnumpy\u001b[0m\u001b[1;33m.\u001b[0m\u001b[0mtile\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0mw\u001b[0m\u001b[1;33m,\u001b[0m\u001b[1;33m(\u001b[0m\u001b[1;36m3\u001b[0m\u001b[1;33m,\u001b[0m\u001b[1;36m1\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m     31\u001b[0m \u001b[1;33m\u001b[0m\u001b[0m\n\u001b[1;32m---> 32\u001b[1;33m \u001b[0mprint\u001b[0m \u001b[1;33m(\u001b[0m\u001b[0mv\u001b[0m\u001b[1;33m*\u001b[0m\u001b[0mx\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0m\u001b[0;32m     33\u001b[0m \u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0;32m     34\u001b[0m \u001b[1;31m# genera error\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n",
+        "\u001b[1;31mValueError\u001b[0m: operands could not be broadcast together with shapes (3,2) (2,3,5) "
+       ]
+      }
+     ],
+     "prompt_number": 49
     },
     {
      "cell_type": "markdown",
