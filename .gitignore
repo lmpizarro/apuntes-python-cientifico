@@ -5,3 +5,4 @@ requirements.txt
 webApp/node_modules
 hil/arduino/build-uno
 src/examples/notebooks/.ipynb_checkpoints/
+cursoPython/.ipynb_checkpoints/
