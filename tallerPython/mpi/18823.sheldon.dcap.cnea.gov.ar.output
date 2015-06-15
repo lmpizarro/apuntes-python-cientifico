@@ -1,0 +1,11 @@
+NUM_PROCS = 8
+NUM_NODES = 4
+Resultado del nodo 1 para 1000000 puntos,  inverse mean 0.114118
+Resultado del nodo 4 para 1000000 puntos,  inverse mean -6.264138
+Resultado del nodo 6 para 1000000 puntos,  inverse mean 0.005008
+Resultado del nodo 7 para 1000000 puntos,  inverse mean 0.039262
+Resultado del nodo 5 para 1000000 puntos,  inverse mean 0.069934
+Resultado del nodo 0 para 1000000 puntos,  inverse mean -0.098639
+Resultado del nodo 2 para 1000000 puntos,  inverse mean 0.010017
+Total  -6.10423119682
+Resultado del nodo 3 para 1000000 puntos,  inverse mean 0.020207
