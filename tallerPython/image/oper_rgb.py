@@ -58,7 +58,7 @@ for i in range(10):
     im_p[:,:,1] =  numpy.uint8(im_green)
     im_p[:,:,2] =  numpy.uint8(im_blue)
     im_png = Image.fromarray(im_p)
-    misc.imsave('random_%02d.png' % i, im_p)
+    misc.imsave('random_%02d.png' % i, im_png)
 
     im_red = numpy.array([0 for i in range(10000)]).reshape((100, 100))
     im_green = numpy.array([250 for i in range(10000)]).reshape((100, 100))
@@ -67,7 +67,7 @@ for i in range(10):
     im_p[:,:,1] =  numpy.uint8(im_green)
     im_p[:,:,2] =  numpy.uint8(im_blue)
     im_png = Image.fromarray(im_p)
-    misc.imsave('constant.png', im_p)
+    misc.imsave('constant.png', im_png)
 
 from glob import glob
 
