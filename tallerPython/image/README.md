@@ -9,6 +9,7 @@
 
  * Scikit-image: image processing  [link](http://scipy-lectures.github.io/packages/scikit-image/index.html)
 
+* Image processing with Python and SciPy  [link](http://prancer.physics.louisville.edu/astrowiki/index.php/Image_processing_with_Python_and_SciPy)
 
 # Image enhancement, digital mammography
 
