@@ -2,6 +2,7 @@
 
 ## Referencias Python
 
+* How to Think Like a Computer Scientist [link](http://openbookproject.net/thinkcs/python/english3e/)
 * Dive into python [link](http://www.diveintopython.net/)
     * En español [link](http://es.diveintopython.net/toc.html)
 * Python for Physics and Astronomy [link](http://prancer.physics.louisville.edu/astrowiki/index.php/Python_for_Physics_and_Astronomy)
