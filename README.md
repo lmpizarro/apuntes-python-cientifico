@@ -9,3 +9,6 @@
 
 ## Referencias numpy
 * Introduction into NumPy [link](http://www.python-course.eu/numpy.php)
+* Python Scientific Lecture Notes [link](http://scipy-lectures.github.io/index.html)
+* Scipy Additional Documentation [link](http://wiki.scipy.org/Additional_Documentation)
+* Scipy Tutorial [link](http://docs.scipy.org/doc/scipy/reference/tutorial/index.html)
