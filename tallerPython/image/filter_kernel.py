@@ -3,7 +3,19 @@
 Created on Wed Jun 24 08:48:15 2015
 
 refs: 
+
+Digital Filters    
+http://homepages.inf.ed.ac.uk/rbf/HIPR2/filtops.htm
 http://homepages.inf.ed.ac.uk/rbf/HIPR2/unsharp.htm
+
+Multidimensional image processing
+http://docs.scipy.org/doc/scipy/reference/tutorial/ndimage.html
+
+Digital mammography image enhancement using improved unsharp masking approach
+
+http://ieeexplore.ieee.org/xpls/icp.jsp?arnumber=5647218
+
+https://github.com/kovimesterr/SSIP2013
 
 @author: lpizarro
 """
