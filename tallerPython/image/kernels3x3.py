@@ -65,5 +65,30 @@ def kernel_update(u, args):
                     kernel[1, 2] * u[1: -1, 2:] + 
                     kernel[1, 0] * u[1: -1, : -2]
                     )/norm
-                    
-                    
+
+
+def num_update(u):
+    u[1:-1,1:-1] = (-u[2:,1:-1] - u[:-2,1:-1] + u[1:-1,1:-1] +
+        u[1:-1,2:] - u[1:-1,:-2])/-3
+
+def equal_values_cruz(u):
+    u[1:-1,1:-1] = (u[2:,1:-1] + u[:-2,1:-1] + u[1:-1,1:-1] +
+    u[1:-1,2:] + u[1:-1,:-2]) / 5
+
+def equal_values(u):
+    u[1:-1,1:-1] = (u[2:,1:-1] + u[:-2,1:-1] + u[:-2,:-2] + u[:-2,2:] + u[1:-1,1:-1] +
+    u[2:,2:] + u[2:,:-2] + u[1:-1,2:] + u[1:-1,:-2]) / 5
+
+def equal_values_diagonal(u):
+    u[1:-1,1:-1] = (u[:-2,:-2] + u[:-2,2:] + 
+    u[1:-1,1:-1] +
+    u[2:,2:] + u[2:,:-2]) / 9
+
+
+def calc(u, Niter=1, func=num_update, args=()):
+    print("args", args)
+    for i in range(Niter):
+        func(u,args)
+    return u
+
+                   
