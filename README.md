@@ -13,3 +13,20 @@
 * Python Scientific Lecture Notes [link](http://scipy-lectures.github.io/index.html)
 * Scipy Additional Documentation [link](http://wiki.scipy.org/Additional_Documentation)
 * Scipy Tutorial [link](http://docs.scipy.org/doc/scipy/reference/tutorial/index.html)
+
+## Graficación
+* Matplotlib: [link](http://matplotlib.org/)
+   * Matplotlib tutorial: [link](http://www.labri.fr/perso/nrougier/teaching/matplotlib/)
+   * Matplotlib 3D tutorial: [link](http://matplotlib.org/mpl_toolkits/mplot3d/tutorial.html)
+* 3D plotting with [Mayavi](https://scipy-lectures.github.io/advanced/3d_plotting/index.html)
+* [Mayavi](http://docs.enthought.com/mayavi/mayavi/): 3D scientific data visualization and plotting in Python
+* Python scripting for 3D plotting [link](http://docs.enthought.com/mayavi/mayavi/mlab.html)
+
+### Otros
+* PyQtGraph Scientific Graphics and GUI Library for Python [link](http://www.pyqtgraph.org/)
+* Vispy [link](http://vispy.org/)
+  * Cyrille Rossant's  [blog](http://cyrille.rossant.net/)
+  * IPython Cookbook [link](https://github.com/ipython-books/cookbook-code)
+* pilas-engine [link](http://pilas-engine.com.ar)
+* pygame [link](http://www.pygame.org)
+
