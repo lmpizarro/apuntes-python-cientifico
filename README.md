@@ -22,6 +22,11 @@
 * [Mayavi](http://docs.enthought.com/mayavi/mayavi/): 3D scientific data visualization and plotting in Python
 * Python scripting for 3D plotting [link](http://docs.enthought.com/mayavi/mayavi/mlab.html)
 
+#HPC
+* Advanced Scientific Programming in Python  [Pragmatic Concurrency for Python](https://python.g-node.org/python-summerschool-2012/parallel)
+*  Fast numerical array expression evaluator for Python and NumPy. [numexpr](https://github.com/pydata/numexpr)
+     * [en google code](https://code.google.com/p/numexpr/)
+
 ### Otros
 * PyQtGraph Scientific Graphics and GUI Library for Python [link](http://www.pyqtgraph.org/)
 * Vispy [link](http://vispy.org/)
